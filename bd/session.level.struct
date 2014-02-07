@@ -1,0 +1,1 @@
+{"columns":{"name":{"length":20,"type":"TEXT"},"description":{"length":250,"type":"TEXT"},"is_admin":{"length":2,"type":"INTEGER"},"active":{"length":2,"type":"INTEGER"},"level_id":{"length":20,"type":"INTEGER PRIMARY KEY"}},"index":["active"]}

@@ -151,7 +151,7 @@ class Nosql {
             $this->{$table_name} = new Nosql($this->name);
             $this->{$table_name}->table = $table_name;
             $this->{$table_name}->structure = $table_structure;
-            var_dump($indexes);
+            //var_dump($indexes);
             foreach($indexes as $field_name) {
                 $this->add_index($field_name);
             }

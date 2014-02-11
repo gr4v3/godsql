@@ -8,6 +8,13 @@
 include 'nosql.php';
 define('DATABASE_PATH','bd/');
 
+
+function dump($str = ''){
+    echo '<pre>';
+    print_r($str);
+    echo '</pre>';
+}
+
 $nosql = new Nosql('session');
 $nosql->structure(array(
         'session' => array(
@@ -20,7 +27,7 @@ $nosql->structure(array(
                 'ip' => array('length' => 20, 'type' => 'TEXT')
             ),
             'index' => array('logged','hash'),
-            'father' => array('user','level')
+            'relation' => array('user','level')
         ),
         'user' => array(
             'columns' => array(
@@ -29,7 +36,7 @@ $nosql->structure(array(
                 'access' => array('length' => 32, 'type' => 'TEXT'),
             ),
             'index' => array('access'),
-            'father' => array('level')
+            'relation' => array('level')
         ),
         'level' => array(
             'columns' => array(
@@ -42,3 +49,56 @@ $nosql->structure(array(
         )
     )
 );
+
+#START EXAMPLE 1
+
+$nosql->user->insert(array(
+    'user' => 'nickA',
+    'name' => 'subjectA',
+    'access' => 0,
+    'level' => array(
+            'name' => 'admin',
+            'description' => 'admin copyrights',
+            'is_admin' => 1,
+            'active' => 1
+        )
+    ));
+
+
+$nosql->user->insert(array(
+    'user' => 'nickB',
+    'name' => 'subjectB',
+    'access' => 0,
+    'level' => array(
+            'name' => 'admin',
+            'description' => 'admin copyrights',
+            'is_admin' => 1,
+            'active' => 1
+        )
+    ));
+
+
+
+$nosql->user->insert(array(
+    'user' => 'nickC',
+    'name' => 'subjectC',
+    'access' => 1,
+    'level' => array(
+            'name' => 'guest',
+            'description' => 'guest copyrights',
+            'is_admin' => 0,
+            'active' => 1
+        )
+    ));
+
+#END EXAMPLE 1
+
+echo 'INSERTED THREE UNIQUE USERS A,B,C';
+
+$content = $nosql->user->select();
+dump($content);
+
+echo 'INSERTED TWO UNIQUE LEVELS admin,guest';
+
+$content = $nosql->level->select();
+dump($content);

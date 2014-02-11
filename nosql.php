@@ -132,6 +132,7 @@ class Nosql {
             if (!isset($table_structure['columns'])) continue;
             if (!isset($table_structure['index'])) continue;
             $instructions = array();
+            array_push($table_structure['index'], $table_name . '_id');
             $indexes = $table_structure['index'];
             if (isset($table_structure['father'])) {
                 $fathers = $table_structure['father'];
@@ -150,6 +151,7 @@ class Nosql {
             $this->{$table_name} = new Nosql($this->name);
             $this->{$table_name}->table = $table_name;
             $this->{$table_name}->structure = $table_structure;
+            var_dump($indexes);
             foreach($indexes as $field_name) {
                 $this->add_index($field_name);
             }
